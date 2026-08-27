@@ -14,7 +14,7 @@ from __future__ import annotations
 # =============================================================================
 # EDIT ONLY THESE SETTINGS BEFORE RUNNING: python3 bot.py
 # =============================================================================
-BOT_TOKEN = "8992928277:AAEKNh-3-80f-mZTTReFtEiKzMiXd0gfQhA"
+BOT_TOKEN = "8737125210:AAHoYa6feASjr1pa6CiAc8GrCWT0VaQdihY"
 ADMIN_ID = 8502412097 # Replace 0 with your numeric Telegram user ID from @userinfobot.
 
 BOT_STATUS_NAME = "UnixNodes"
@@ -1306,7 +1306,15 @@ async def post_init(application: Application) -> None:
             BotCommand("admin_unban", "Unban a user"),
             BotCommand("admin_kill_all", "Stop all running VPS instances"),
         ]
-        await application.bot.set_my_commands(user_commands + admin_commands, scope=BotCommandScopeChat(ADMIN_ID))
+        try:
+            await application.bot.set_my_commands(
+                user_commands + admin_commands,
+                scope=BotCommandScopeChat(ADMIN_ID),
+            )
+        except BadRequest as exc:
+            # Telegram rejects scoped commands if the admin hasn't started the bot
+            # yet or the chat isn't known to Telegram. Global commands still apply.
+            logger.warning("Could not set admin-scoped commands for %s: %s", ADMIN_ID, exc)
     if application.job_queue is None:
         raise RuntimeError('Job queue is unavailable. Install python-telegram-bot with the "job-queue" extra.')
     application.job_queue.run_repeating(sync_statuses_job, interval=STATUS_SYNC_SECONDS, first=10, name="sync_statuses")
