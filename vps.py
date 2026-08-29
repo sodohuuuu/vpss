@@ -14,7 +14,7 @@ from __future__ import annotations
 # =============================================================================
 # EDIT ONLY THESE SETTINGS BEFORE RUNNING: python3 bot.py
 # =============================================================================
-BOT_TOKEN = "8737125210:AAHoYa6feASjr1pa6CiAc8GrCWT0VaQdihY"
+BOT_TOKEN = "8685557139:AAEgRJ-_IGhb_iqeWMLFVKPot6JKclTcFbQ"
 ADMIN_ID = 8502412097 # Replace 0 with your numeric Telegram user ID from @userinfobot.
 
 BOT_STATUS_NAME = "UnixNodes"
